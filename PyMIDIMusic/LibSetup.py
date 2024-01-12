@@ -177,3 +177,14 @@ easyLib.MIDIMusic_FilterInstruments.argtypes = [ctypes.POINTER(TMIDIMusic), ctyp
 easyLib.MIDIMusic_ConvertToMonoTrack.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_ConvertToNoteOnOff.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_ConvertRelative.argtypes = [ctypes.POINTER(TMIDIMusic)]
+
+
+fluidsynthMIDIPlayerLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/FluidsynthMIDIPlayer.dll')
+
+class TFluidsynthPlayerAsync(ctypes.Structure):
+    _fields_ = ()
+
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_CreateAndPlay.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_char_p]
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_CreateAndPlay.restype = ctypes.POINTER(TFluidsynthPlayerAsync)
+
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Destroy.argtypes = [ctypes.POINTER(TFluidsynthPlayerAsync)]

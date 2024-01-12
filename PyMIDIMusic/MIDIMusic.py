@@ -10,6 +10,7 @@ from .LibSetup import *
 
 class MIDIMusic:
     nativeObject = None
+    _player = None
 
     class Track:
         def GetNbEvents(self) -> int:
@@ -39,7 +40,14 @@ class MIDIMusic:
     def GetTrack(self, index: int) -> object:
         return easyLib.MIDIMusic_GetTrack(self.nativeObject, index)
     
+    def Play(self, soundfontPath: str):
+        if (self._player != None):
+            self.Stop()
+        self._player = fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_CreateAndPlay(self.nativeObject, soundfontPath.encode('utf-8'))
 
+    def Stop(self):
+        fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Destroy(self._player)
+        self._player = None
     
     # def GetProgramsList(self):
     #     return easyLib.MIDIMusic_GetProgramsList(self.nativeObject)

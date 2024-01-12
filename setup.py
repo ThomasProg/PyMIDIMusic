@@ -5,6 +5,9 @@ import shutil
 dllPath = "C:/Users/thoma/PandorasBox/Projects/ModularMusicGenerationModules/Build/Modules/RuntimeModules/EasyMidiFileParserCpp/Release/EasyMidiFileParserCpp.dll"
 shutil.copyfile(dllPath, "PyMIDIMusic/dll/EasyMidiFileParserCpp.dll")
 
+dllPath = "C:/Users/thoma/PandorasBox/Projects/ModularMusicGenerationModules/Build/Modules/RuntimeModules/FluidsynthMIDIPlayer/Release/"
+shutil.copytree(dllPath, "PyMIDIMusic/dll/", dirs_exist_ok=True, ignore=shutil.ignore_patterns('*.exp', '*.lib', '*.pdb', '*.exe'))
+
 with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
@@ -56,5 +59,17 @@ setuptools.setup(
     #     ],
     # },
     include_package_data=True,
-    package_data={"PyMIDIMusic": ['dll/EasyMidiFileParserCpp.dll']},
+    package_data={"PyMIDIMusic": ['dll/EasyMidiFileParserCpp.dll',
+                                  'dll/FluidsynthMIDIPlayer.dll',
+                                  'dll/libfluidsynth-3.dll', 
+                                  'dll/libgcc_s_sjlj-1.dll',
+                                  'dll/libglib-2.0-0.dll',
+                                  'dll/libgobject-2.0-0.dll',
+                                  'dll/libgomp-1.dll',
+                                  'dll/libgthread-2.0-0.dll',
+                                  'dll/libinstpatch-2.dll',
+                                  'dll/libintl-8.dll',
+                                  'dll/libsndfile-1.dll',
+                                  'dll/libstdc++-6.dll',
+                                  'dll/libwinpthread-1.dll']},
 )
