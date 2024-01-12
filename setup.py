@@ -11,7 +11,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
 setuptools.setup(
     name='PyMIDIMusic',
     author='Progz',
-    version = '0.0.6',
+    version = '0.0.1',
     author_email='progz.email@gmail.com',
     description='Python Wrapper of EasyMidiFileParserCpp',
     keywords='example, pypi, package',

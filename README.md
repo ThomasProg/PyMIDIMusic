@@ -12,6 +12,14 @@ To build:
 py -m build
 ```
 
+# Locally
+
+```
+pip install ./
+```
+
+# Online
+
 To upload the package, install Twine: 
 ```
 py -m pip install --upgrade twine
@@ -20,6 +28,8 @@ py -m pip install --upgrade twine
 To upload the package:
 ```
 py -m twine upload --repository testpypi dist/*
+```
+
 ```
   username = __token__
   password = pypi-[THE TOKEN YOU GOT FROM test.pypi.org/]
@@ -40,6 +50,53 @@ To install locally:
 pip install -e ./
 ```
 
-# https://youtu.be/QMY-OkckDwo
+# Usage
 
-export PYTHONPATH=$PYTHONPATH:C:\Users\thoma\PandorasBox\Projects\ModularMusicGenerationModules\Modules\RuntimeModules\PyEasyMidiFileParserCpp
+Display notes per channel:
+```py
+from PyMIDIMusic import *
+import matplotlib.pyplot as plt
+
+class Test(IMIDIEventReceiver):
+    channels = []
+    times = []
+    notes = []
+    colors = []
+
+    def OnEvent(self, event): pass
+
+    def OnSysEvent(self, event): pass
+    def OnMetaEvent(self, event): pass
+    def OnChannelEvent(self, event): pass
+
+    def OnNoteOn(self, event): 
+        e = NoteOn(event)
+        self.times.append(e.GetDeltaTime())
+        self.notes.append(e.GetKey())
+        self.channels.append(e.GetChannel())
+    def OnNoteOff(self, event): pass
+    def OnNoteOnOff(self, event): pass
+
+
+music = MIDIMusic() 
+
+music.LoadFromFile("C:/Users/thoma/PandorasBox/Projects/ModularMusicGenerationModules/Assets/Datasets/LakhMidi-Clean/Ludwig_van_Beethoven/Fur_Elise.1.mid")
+
+# easyLib.MIDIMusic_FilterChannel(music.nativeObject, 9, True)
+# easyLib.MIDIMusic_FilterInstruments(music.nativeObject, 0, 7, False)
+
+easyLib.MIDIMusic_ConvertAbsolute(music.nativeObject)
+
+test = Test()
+Dispatch(music, test)
+
+plt.figure(figsize=(10, 5))
+plt.scatter(test.times, test.channels, marker='o')
+
+plt.xlabel('Time')
+plt.ylabel('Channel')
+plt.title("Notes per channel")
+
+plt.show()
+```
+

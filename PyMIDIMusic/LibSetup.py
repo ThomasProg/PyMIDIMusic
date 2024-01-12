@@ -169,3 +169,11 @@ easyLib.MIDIMusic_LoadFromFile.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_
 
 # easyLib.MIDIMusic_GetEvent.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
 # easyLib.MIDIMusic_GetEvent.restype = ctypes.c_void_p
+
+easyLib.MIDIMusic_ConvertAbsolute.argtypes = [ctypes.POINTER(TMIDIMusic)]
+easyLib.MIDIMusic_FilterChannel.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_uint8, ctypes.c_bool]
+easyLib.MIDIMusic_Compress.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_int16]
+easyLib.MIDIMusic_FilterInstruments.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_uint8, ctypes.c_uint8, ctypes.c_bool]
+easyLib.MIDIMusic_ConvertToMonoTrack.argtypes = [ctypes.POINTER(TMIDIMusic)]
+easyLib.MIDIMusic_ConvertToNoteOnOff.argtypes = [ctypes.POINTER(TMIDIMusic)]
+easyLib.MIDIMusic_ConvertRelative.argtypes = [ctypes.POINTER(TMIDIMusic)]
