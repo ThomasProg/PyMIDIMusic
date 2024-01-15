@@ -18,9 +18,10 @@ class MIDIMusic:
         def GetEvent(self, index: int) -> object:
             return easyLib.MIDIMusic_GetEvent(self.nativeObject, index)
 
-    def __init__(self) -> None:
-
-        self.nativeObject = easyLib.MIDIMusic_Create()
+    def __init__(self, nativeObject = None) -> None:
+        self.nativeObject = nativeObject
+        if (self.nativeObject == None):
+            self.nativeObject = easyLib.MIDIMusic_Create()
 
     def __del__(self):
         easyLib.MIDIMusic_Destroy(self.nativeObject)
@@ -56,7 +57,9 @@ class MIDIMusic:
     def LoadFromFile(self, path: str):
         easyLib.MIDIMusic_LoadFromFile(self.nativeObject, path.encode('utf-8'))
 
-
+    def Clone(self):
+        newMusicNativeObject = easyLib.MIDIMusic_Clone(self.nativeObject)
+        return MIDIMusic(nativeObject=newMusicNativeObject)
 
 
 

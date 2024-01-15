@@ -147,6 +147,9 @@ easyLib.MIDIMusic_Dispatch.argtypes = [ctypes.c_void_p, MIDIEventCallbacks, ctyp
 easyLib.MIDIMusic_Create.restype = ctypes.POINTER(TMIDIMusic)
 easyLib.MIDIMusic_Destroy.argtypes = [ctypes.POINTER(TMIDIMusic)]
 
+easyLib.MIDIMusic_Clone.argtypes = [ctypes.POINTER(TMIDIMusic)]
+easyLib.MIDIMusic_Clone.restype = ctypes.POINTER(TMIDIMusic)
+
 easyLib.MIDIMusic_LoadFromFile.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_char_p]
 
 # easyLib.MIDIMusic_GetDurationInTicks.argtypes = [ctypes.c_void_p]
