@@ -43,7 +43,8 @@ class MIDIMusic:
     def Play(self, soundfontPath: str):
         if (self._player != None):
             self.Stop()
-        self._player = fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_CreateAndPlay(self.nativeObject, soundfontPath.encode('utf-8'))
+        self._player = fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Create(self.nativeObject, soundfontPath.encode('utf-8'))
+        fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_PlayAsync(self._player)
 
     def Stop(self):
         fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Destroy(self._player)

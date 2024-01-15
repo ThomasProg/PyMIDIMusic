@@ -21,3 +21,4 @@ music = MIDIMusic()
 music.LoadFromFile("C:/Users/thoma/PandorasBox/Projects/ModularMusicGenerationModules/Assets/Datasets/LakhMidi-Clean/Ludwig_van_Beethoven/Fur_Elise.1.mid")
 
 Dispatch(music, Test())
+

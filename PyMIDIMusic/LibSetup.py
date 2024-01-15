@@ -184,7 +184,10 @@ fluidsynthMIDIPlayerLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/Flu
 class TFluidsynthPlayerAsync(ctypes.Structure):
     _fields_ = ()
 
-fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_CreateAndPlay.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_char_p]
-fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_CreateAndPlay.restype = ctypes.POINTER(TFluidsynthPlayerAsync)
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Create.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_char_p]
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Create.restype = ctypes.POINTER(TFluidsynthPlayerAsync)
 
 fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Destroy.argtypes = [ctypes.POINTER(TFluidsynthPlayerAsync)]
+
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_Play.argtypes = [ctypes.POINTER(TFluidsynthPlayerAsync)]
+fluidsynthMIDIPlayerLib.FluidsynthPlayerAsync_PlayAsync.argtypes = [ctypes.POINTER(TFluidsynthPlayerAsync)]
