@@ -2,7 +2,14 @@ from PyMIDIMusic import *
 
 music = MIDIMusic() 
 
-music.LoadFromFile("C:/Users/thoma/PandorasBox/Projects/ModularMusicGenerationModules/Assets/Datasets/LakhMidi-Clean/Ludwig_van_Beethoven/Fur_Elise.1.mid")
+midiFile = input("Enter a midi file path : ")
+music.LoadFromFile(midiFile)
 easyLib.MIDIMusic_ConvertToMonoTrack(music.nativeObject)
 
-music.Play("C:/Users/thoma/PandorasBox/Projects/ModularMusicGenerationModules/Assets/Soundfonts/Touhou/Touhou.sf2")
+sfFile = input("Enter a soundfont file path : ")
+music.Play(sfFile)
+
+while(True):
+    s = input()
+    if (s == "stop"):
+        break

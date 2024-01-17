@@ -53,9 +53,10 @@ class TNoteOnOff(TPMIDIChannelEvent):
 
 
 
-
-easyLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/EasyMidiFileParserCpp.dll')
-
+try:
+    easyLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/EasyMidiFileParserCpp.dll')
+except:
+    easyLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/libEasyMidiFileParserCpp.so')
 #
 
 easyLib.MIDIEvent_GetDeltaTime.restype = ctypes.c_uint32
@@ -181,8 +182,10 @@ easyLib.MIDIMusic_ConvertToMonoTrack.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_ConvertToNoteOnOff.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_ConvertRelative.argtypes = [ctypes.POINTER(TMIDIMusic)]
 
-
-fluidsynthMIDIPlayerLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/FluidsynthMIDIPlayer.dll')
+try:
+    fluidsynthMIDIPlayerLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/FluidsynthMIDIPlayer.dll')
+except:
+    fluidsynthMIDIPlayerLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/libFluidsynthMIDIPlayer.so')
 
 class TFluidsynthPlayerAsync(ctypes.Structure):
     _fields_ = ()

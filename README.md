@@ -18,6 +18,11 @@ py -m build
 pip install ./
 ```
 
+To know where it is installed, you can also use:
+```
+python -m pip install . --verbose
+```
+
 # Online
 
 To upload the package, install Twine: 
