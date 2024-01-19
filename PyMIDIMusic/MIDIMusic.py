@@ -61,6 +61,10 @@ class MIDIMusic:
         newMusicNativeObject = easyLib.MIDIMusic_Clone(self.nativeObject)
         return MIDIMusic(nativeObject=newMusicNativeObject)
 
+    def AddEvent(self, event: PMIDIEvent):
+        easyLib.MIDIMusic_AddEvent(self.nativeObject, event.internal)
+        event.isSelfAllocated = False
+
 
 
 

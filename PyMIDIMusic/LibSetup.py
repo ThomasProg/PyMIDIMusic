@@ -61,9 +61,11 @@ except:
 
 easyLib.MIDIEvent_GetDeltaTime.restype = ctypes.c_uint32
 easyLib.MIDIEvent_GetDeltaTime.argtypes = [ctypes.c_void_p] # inherits PMIDIEvent
+easyLib.MIDIEvent_SetDeltaTime.argtypes = [ctypes.c_void_p, ctypes.c_uint32] # inherits PMIDIEvent
 
 easyLib.MIDIChannelEvent_GetChannel.restype = ctypes.c_uint32
 easyLib.MIDIChannelEvent_GetChannel.argtypes = [ctypes.c_void_p] # inherits PMIDIChannelEvent
+easyLib.MIDIChannelEvent_SetChannel.argtypes = [ctypes.c_void_p, ctypes.c_uint32] # inherits PMIDIChannelEvent
 
 easyLib.NoteOn_GetKey.restype = ctypes.c_uint32
 easyLib.NoteOn_GetKey.argtypes = [ctypes.c_void_p] # inherits NoteOn
@@ -80,35 +82,65 @@ easyLib.NoteOnOff_GetVelocity.argtypes = [ctypes.c_void_p] # inherits NoteOnOff
 easyLib.NoteOnOff_GetDuration.restype = ctypes.c_uint32
 easyLib.NoteOnOff_GetDuration.argtypes = [ctypes.c_void_p] # inherits NoteOnOff
 
+easyLib.NoteOnOff_Create.restype = ctypes.c_void_p
+easyLib.NoteOn_Create.restype = ctypes.c_void_p
+easyLib.NoteOff_Create.restype = ctypes.c_void_p
+easyLib.PMIDIEvent_Destroy.argtypes = [ctypes.c_void_p] # inherits PMIDIEvent
+
+
+
+
 class PMIDIEvent:
-    _internal = None # The C++ object instance
+    isSelfAllocated = False
+    internal = None # The C++ object instance
     def __init__(self, internal) -> None:
-        self._internal = internal
+        self.internal = internal
+    def __del__(self):
+        if (self.isSelfAllocated):
+            easyLib.PMIDIEvent_Destroy(self.internal)
     def GetDeltaTime(self):
-        return easyLib.MIDIEvent_GetDeltaTime(self._internal)
+        return easyLib.MIDIEvent_GetDeltaTime(self.internal)
+    def SetDeltaTime(self, deltaTime):
+        return easyLib.MIDIEvent_SetDeltaTime(self.internal, deltaTime)
 
 class PMIDIChannelEvent(PMIDIEvent):
     def GetChannel(self):
-        return easyLib.MIDIChannelEvent_GetChannel(self._internal)
+        return easyLib.MIDIChannelEvent_GetChannel(self.internal)
+    def SetChannel(self, channel):
+        return easyLib.MIDIChannelEvent_SetChannel(self.internal, channel)
 
 class NoteOn(PMIDIChannelEvent):
+    def __init__(self, internal = None) -> None:
+        super().__init__(internal if internal != None else easyLib.NoteOn_Create())
+        self.isSelfAllocated = True
     def GetKey(self):
-        return easyLib.NoteOn_GetKey(self._internal)
+        return easyLib.NoteOn_GetKey(self.internal)
     def GetVelocity(self):
-        return easyLib.NoteOn_GetVelocity(self._internal)
+        return easyLib.NoteOn_GetVelocity(self.internal)
 
 class NoteOff(PMIDIChannelEvent):
+    def __init__(self, internal = None) -> None:
+        super().__init__(internal if internal != None else easyLib.NoteOff_Create())
+        self.isSelfAllocated = True
     def GetKey(self):
-        return easyLib.NoteOff_GetKey(self._internal)
+        return easyLib.NoteOff_GetKey(self.internal)
 
 class NoteOnOff(PMIDIChannelEvent):
+    def __init__(self, internal = None) -> None:
+        super().__init__(internal if internal != None else easyLib.NoteOnOff_Create())
+        self.isSelfAllocated = True
     def GetKey(self):
-        return easyLib.NoteOnOff_GetKey(self._internal)
+        return easyLib.NoteOnOff_GetKey(self.internal)
     def GetVelocity(self):
-        return easyLib.NoteOnOff_GetVelocity(self._internal)
+        return easyLib.NoteOnOff_GetVelocity(self.internal)
     def GetDuration(self):
-        return easyLib.NoteOnOff_GetDuration(self._internal)
-
+        return easyLib.NoteOnOff_GetDuration(self.internal)
+    def SetKey(self, key):
+        return easyLib.NoteOnOff_SetKey(self.internal, key)
+    def SetVelocity(self, velocity):
+        return easyLib.NoteOnOff_SetVelocity(self.internal, velocity)
+    def SetDuration(self, duration):
+        return easyLib.NoteOnOff_SetDuration(self.internal, duration)
 
 
 
@@ -152,6 +184,8 @@ easyLib.MIDIMusic_Clone.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_Clone.restype = ctypes.POINTER(TMIDIMusic)
 
 easyLib.MIDIMusic_LoadFromFile.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_char_p]
+
+easyLib.MIDIMusic_AddEvent.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_void_p] # inherits PMIDIEvent
 
 # easyLib.MIDIMusic_GetDurationInTicks.argtypes = [ctypes.c_void_p]
 # easyLib.MIDIMusic_GetDurationInTicks.restype = ctypes.c_uint32
