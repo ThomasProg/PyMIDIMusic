@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 from ctypes import cdll
 from .LibSetup import *
 

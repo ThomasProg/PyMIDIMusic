@@ -55,6 +55,9 @@ To install locally:
 pip install -e ./
 ```
 
+On linux, if you get this error message when importing the library: `version GLIBCXX_3.4.32' not found`
+then make sure to install libstdcxx-ng: `conda install -c conda-forge libstdcxx-ng`
+
 # Usage
 
 Display notes per channel:
