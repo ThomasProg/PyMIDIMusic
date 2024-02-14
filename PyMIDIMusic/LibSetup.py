@@ -216,6 +216,24 @@ easyLib.MIDIMusic_ConvertToMonoTrack.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_ConvertToNoteOnOff.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_ConvertRelative.argtypes = [ctypes.POINTER(TMIDIMusic)]
 
+
+class TTokenizer(ctypes.Structure):
+    _fields_ = ()
+easyLib.Tokenizer_Create.restype = ctypes.POINTER(TTokenizer)
+easyLib.Tokenizer_Create.argtypes = [ctypes.POINTER(TMIDIMusic)]
+easyLib.Tokenizer_Destroy.argtypes = [ctypes.POINTER(TTokenizer)]
+
+easyLib.Tokenizer_GetNbTokens.argtypes = [ctypes.POINTER(TTokenizer)]
+easyLib.Tokenizer_GetNbTokens.restype = ctypes.c_uint32
+
+easyLib.Tokenizer_GetTokens.argtypes = [ctypes.POINTER(TTokenizer)]
+easyLib.Tokenizer_GetTokens.restype = ctypes.POINTER(ctypes.c_float)
+
+easyLib.Tokenizer_Preprocess.argtypes = [ctypes.POINTER(TTokenizer)]
+easyLib.Tokenizer_BuildTokensFromNotes1.argtypes = [ctypes.POINTER(TTokenizer)]
+easyLib.Tokenizer_Postprocess.argtypes = [ctypes.POINTER(TTokenizer)]
+
+
 try:
     fluidsynthMIDIPlayerLib = cdll.LoadLibrary(os.path.dirname(__file__) + '/dll/FluidsynthMIDIPlayer.dll')
 except:
