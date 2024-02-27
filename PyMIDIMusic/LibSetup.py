@@ -112,7 +112,7 @@ class PMIDIChannelEvent(PMIDIEvent):
 class NoteOn(PMIDIChannelEvent):
     def __init__(self, internal = None) -> None:
         super().__init__(internal if internal != None else easyLib.NoteOn_Create())
-        self.isSelfAllocated = True
+        self.isSelfAllocated = (internal == None)
     def GetKey(self):
         return easyLib.NoteOn_GetKey(self.internal)
     def GetVelocity(self):
@@ -121,14 +121,14 @@ class NoteOn(PMIDIChannelEvent):
 class NoteOff(PMIDIChannelEvent):
     def __init__(self, internal = None) -> None:
         super().__init__(internal if internal != None else easyLib.NoteOff_Create())
-        self.isSelfAllocated = True
+        self.isSelfAllocated = (internal == None)
     def GetKey(self):
         return easyLib.NoteOff_GetKey(self.internal)
 
 class NoteOnOff(PMIDIChannelEvent):
     def __init__(self, internal = None) -> None:
         super().__init__(internal if internal != None else easyLib.NoteOnOff_Create())
-        self.isSelfAllocated = True
+        self.isSelfAllocated = (internal == None)
     def GetKey(self):
         return easyLib.NoteOnOff_GetKey(self.internal)
     def GetVelocity(self):
@@ -229,9 +229,7 @@ easyLib.Tokenizer_GetNbTokens.restype = ctypes.c_uint32
 easyLib.Tokenizer_GetTokens.argtypes = [ctypes.POINTER(TTokenizer)]
 easyLib.Tokenizer_GetTokens.restype = ctypes.POINTER(ctypes.c_float)
 
-easyLib.Tokenizer_Preprocess.argtypes = [ctypes.POINTER(TTokenizer)]
 easyLib.Tokenizer_BuildTokensFromNotes1.argtypes = [ctypes.POINTER(TTokenizer)]
-easyLib.Tokenizer_Postprocess.argtypes = [ctypes.POINTER(TTokenizer)]
 
 
 try:
