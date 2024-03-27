@@ -17,6 +17,8 @@ class MIDIMusic:
             self.nativeObject = easyLib.MIDIMusic_Create()
 
     def __del__(self):
+        if (self._player != None):
+            self.Stop()
         easyLib.MIDIMusic_Destroy(self.nativeObject)
 
     def GetDurationInTicks(self) -> int:
