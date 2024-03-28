@@ -2,6 +2,7 @@ import setuptools
 import shutil
 import os
 
+package_dataFiles = []
 try:
     package_dataFiles = []
     files = ['EasyMidiFileParserCpp.dll',
@@ -25,13 +26,32 @@ try:
 
 except:
     package_dataFiles = []
-    files = ['libEasyMidiFileParserCpp.so',
-            'libFluidsynthMIDIPlayer.so']
+    # files = ['libFluidsynthMIDIPlayer.so']
 
-    for file in files:
-        dllPath = os.path.join(os.path.dirname(__file__), "../../../../Build/Modules/RuntimeModules/FluidsynthMIDIPlayer/" + file)
-        shutil.copyfile(dllPath, os.path.join(os.path.dirname(__file__), "PyMIDIMusic/dll/" + file))
-        package_dataFiles.append("PyMIDIMusic/dll/" + file)
+    # for file in files:
+    #     dllPath = os.path.join(os.path.dirname(__file__), "../../../../build/Modules/RuntimeModules/FluidsynthMIDIPlayer/" + file)
+    #     shutil.copyfile(dllPath, os.path.join(os.path.dirname(__file__), "PyMIDIMusic/dll/" + file))
+    #     package_dataFiles.append("PyMIDIMusic/dll/" + file)
+
+    # files = ['libEasyMidiFileParserCpp.so']
+
+    # for file in files:
+    #     dllPath = os.path.join(os.path.dirname(__file__), "../../../../build/Modules/RuntimeModules/EasyMidiFileParserCpp/" + file)
+    #     shutil.copyfile(dllPath, os.path.join(os.path.dirname(__file__), "PyMIDIMusic/dll/" + file))
+    #     package_dataFiles.append("PyMIDIMusic/dll/" + file)
+
+    buildModulesPath = os.path.join(os.path.dirname(__file__), "../../../../build/Modules/RuntimeModules/")
+    print("buildModulesPath: ", buildModulesPath)
+    dllPath1 = os.path.join(buildModulesPath, "FluidsynthMIDIPlayer/libFluidsynthMIDIPlayer.so")
+    dllPath2 = os.path.join(buildModulesPath, "EasyMidiFileParserCpp/libEasyMidiFileParserCpp.so")
+
+    shutil.copyfile(dllPath1, os.path.join(os.path.dirname(__file__), "PyMIDIMusic/dll/libFluidsynthMIDIPlayer.so"))
+    shutil.copyfile(dllPath2, os.path.join(os.path.dirname(__file__), "PyMIDIMusic/dll/libEasyMidiFileParserCpp.so"))
+
+    package_dataFiles.append("dll/libFluidsynthMIDIPlayer.so")
+    package_dataFiles.append("dll/libEasyMidiFileParserCpp.so")
+
+    print("package_dataFiles: ", package_dataFiles)
 
 with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()

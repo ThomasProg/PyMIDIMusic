@@ -60,9 +60,11 @@ class MIDIMusic:
         easyLib.MIDIMusic_AddEvent(self.nativeObject, event.internal)
         event.isSelfAllocated = False
 
+    def GetTicksPerQuarterNote(self) -> int:
+        return easyLib.MIDIMusic_GetTicksPerQuarterNote(self.nativeObject)
 
-
-
+    def SetTicksPerQuarterNote(self, ticksPerQuarterNote) -> int:
+        easyLib.MIDIMusic_SetTicksPerQuarterNote(self.nativeObject, ticksPerQuarterNote)
 
 
 

@@ -183,6 +183,11 @@ easyLib.MIDIMusic_Destroy.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_Clone.argtypes = [ctypes.POINTER(TMIDIMusic)]
 easyLib.MIDIMusic_Clone.restype = ctypes.POINTER(TMIDIMusic)
 
+easyLib.MIDIMusic_GetTicksPerQuarterNote.argtypes = [ctypes.POINTER(TMIDIMusic)]
+easyLib.MIDIMusic_GetTicksPerQuarterNote.restype = ctypes.c_int32
+
+easyLib.MIDIMusic_SetTicksPerQuarterNote.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_int32]
+
 easyLib.MIDIMusic_LoadFromFile.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_char_p]
 
 easyLib.MIDIMusic_AddEvent.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_void_p] # inherits PMIDIEvent
