@@ -15,6 +15,13 @@ class TPMIDIChannelEvent(TPMIDIEvent):
         ("channel", ctypes.c_uint32),
     )
 
+class TMIDIMetaEvent(TPMIDIEvent):
+    _fields_ = (
+        ("vptr", ctypes.c_void_p),
+        ("deltaTime", ctypes.c_uint32),
+        # ("channel", ctypes.c_uint32),
+    )
+
 class TNoteOn(TPMIDIChannelEvent):
     _fields_ = (
         ("vptr", ctypes.c_void_p),
@@ -41,6 +48,17 @@ class TNoteOnOff(TPMIDIChannelEvent):
         ("velocity", ctypes.c_uint32),
         ("duration", ctypes.c_uint32),
     )
+
+class TTimeSignature(TMIDIMetaEvent):
+    _fields_ = (
+        ("vptr", ctypes.c_void_p),
+        ("deltaTime", ctypes.c_uint32),
+        ("nominator", ctypes.c_uint32),
+        ("denominator", ctypes.c_uint32),
+        ("clocks", ctypes.c_uint32),
+        ("notes", ctypes.c_uint32),
+    )
+
 
 
 
@@ -142,11 +160,27 @@ class NoteOnOff(PMIDIChannelEvent):
     def SetDuration(self, duration):
         return easyLib.NoteOnOff_SetDuration(self.internal, duration)
 
+# https://www.recordingblogs.com/wiki/midi-time-signature-meta-message
+class TimeSignature(PMIDIEvent):
+    def __init__(self, internal = None) -> None:
+        super().__init__(internal if internal != None else easyLib.TimeSignature_Create())
+        self.isSelfAllocated = (internal == None)
 
-
-
-
-
+    # number of beats per measure
+    def GetNominator(self):
+        return easyLib.TimeSignature_GetNominator(self.internal)
+    # returns n, where 2^n = the denominator
+    # indicates which type of note receives one beat
+    def GetDenominator(self):
+        return easyLib.TimeSignature_GetDenominator(self.internal)
+    
+    # metronome pulse in terms of the number of MIDI clock ticks per click
+    def GetClocks(self):
+        return easyLib.TimeSignature_GetClocks(self.internal)
+    
+    # amount of 32nd notes per beat
+    def GetNotes(self):
+        return easyLib.TimeSignature_GetNotes(self.internal)
 
 
 class MIDIEventCallbacks(ctypes.Structure):
@@ -165,6 +199,8 @@ class MIDIEventCallbacks(ctypes.Structure):
         ("OnPitchBend", ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_void_p)),
         ("OnNoteAfterTouch", ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_void_p)),
         ("OnChannelAfterTouch", ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_void_p)), 
+
+        ("OnTimeSignature", ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(TTimeSignature))), 
     )
 
 class TMIDIMusic(ctypes.Structure):

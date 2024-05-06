@@ -49,8 +49,8 @@ class MIDIMusic:
     # def GetProgramsList(self):
     #     return easyLib.MIDIMusic_GetProgramsList(self.nativeObject)
 
-    def LoadFromFile(self, path: str):
-        easyLib.MIDIMusic_LoadFromFile(self.nativeObject, path.encode('utf-8'))
+    def LoadFromFile(self, path: str) -> bool:
+        return easyLib.MIDIMusic_LoadFromFile(self.nativeObject, path.encode('utf-8'))
 
     def Clone(self):
         newMusicNativeObject = easyLib.MIDIMusic_Clone(self.nativeObject)

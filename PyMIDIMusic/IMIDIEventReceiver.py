@@ -13,6 +13,8 @@ class IMIDIEventReceiver:
     def OnNoteOn(self, event): pass
     def OnNoteOff(self, event): pass
     def OnNoteOnOff(self, event): pass
+
+    def OnTimeSignature(self, event): pass
     
 def Dispatch(music: MIDIMusic, eventReceiver: IMIDIEventReceiver):
     callbacks = MIDIEventCallbacks()
@@ -52,7 +54,12 @@ def Dispatch(music: MIDIMusic, eventReceiver: IMIDIEventReceiver):
         originalInstance.OnNoteOff(event)
     callbacks.OnNoteOff = type(callbacks.OnNoteOff)(LocalOnNoteOff)
 
-    # @TODO : Over callbacks
+    def LocalOnTimeSignature(a, event):
+        originalInstance = ctypes.cast(a, ctypes.POINTER(ctypes.py_object)).contents.value
+        originalInstance.OnTimeSignature(event)
+    callbacks.OnTimeSignature = type(callbacks.OnTimeSignature)(LocalOnTimeSignature)
+
+    # @TODO : Other callbacks
 
     my_instance_ptr = ctypes.cast(ctypes.pointer(ctypes.py_object(eventReceiver)), ctypes.c_void_p)
     
