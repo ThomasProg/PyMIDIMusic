@@ -228,6 +228,19 @@ easyLib.MIDIMusic_LoadFromFile.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_
 
 easyLib.MIDIMusic_AddEvent.argtypes = [ctypes.POINTER(TMIDIMusic), ctypes.c_void_p] # inherits PMIDIEvent
 
+
+
+
+
+
+# NoteOnOff
+easyLib.NoteOnOff_SetDuration.argtypes = [ctypes.c_void_p, ctypes.c_int32]
+easyLib.NoteOnOff_SetKey.argtypes = [ctypes.c_void_p, ctypes.c_int32]
+easyLib.NoteOnOff_SetVelocity.argtypes = [ctypes.c_void_p, ctypes.c_int32]
+
+
+
+
 # easyLib.MIDIMusic_GetDurationInTicks.argtypes = [ctypes.c_void_p]
 # easyLib.MIDIMusic_GetDurationInTicks.restype = ctypes.c_uint32
 
