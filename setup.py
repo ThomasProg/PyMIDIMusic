@@ -5,24 +5,30 @@ import os
 package_dataFiles = []
 try:
     package_dataFiles = []
-    files = ['EasyMidiFileParserCpp.dll',
-            'FluidsynthMIDIPlayer.dll',
-            'libfluidsynth-3.dll', 
-            'libgcc_s_sjlj-1.dll',
-            'libglib-2.0-0.dll',
-            'libgobject-2.0-0.dll',
-            'libgomp-1.dll',
-            'libgthread-2.0-0.dll',
-            'libinstpatch-2.dll',
-            'libintl-8.dll',
-            'libsndfile-1.dll',
-            'libstdc++-6.dll',
-            'libwinpthread-1.dll']
+    files = [['EasyMidiFileParserCpp.dll', '../../../../Build/Modules/RuntimeModules/EasyMidiFileParserCpp/Release/'],
+            ['FluidsynthMIDIPlayer.dll', '../../../../Build/Modules/RuntimeModules/FluidsynthMIDIPlayer/Release/'],
+            ['libfluidsynth-3.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'], 
+            ['libgcc_s_sjlj-1.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libglib-2.0-0.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libgobject-2.0-0.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libgomp-1.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libgthread-2.0-0.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libinstpatch-2.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libintl-8.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libsndfile-1.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libstdc++-6.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/'],
+            ['libwinpthread-1.dll', '../../../../Modules/RuntimeModules/fluidsynth/Downloads/bin/']]
 
-    for file in files:
-        dllPath = os.path.join(os.path.dirname(__file__), "../../../../Build/Modules/RuntimeModules/FluidsynthMIDIPlayer/Release/" + file)
-        shutil.copyfile(dllPath, "PyMIDIMusic/dll/" + file)
-        package_dataFiles.append("PyMIDIMusic/dll/" + file)
+    for file in files: 
+        dllPath = os.path.join(os.path.dirname(__file__), file[1] + file[0])
+        print("copying %s to %s" % (dllPath, ("PyMIDIMusic/dll/" + file[0])))
+        destFolder = "PyMIDIMusic/dll/"
+        if not os.path.exists(destFolder):
+            os.makedirs(destFolder)
+        shutil.copyfile(dllPath, destFolder + file[0])
+        package_dataFiles.append("dll/" + file[0])
+
+    print("packaged files:", package_dataFiles)
 
 except:
     package_dataFiles = []

@@ -17,6 +17,10 @@ py -m build
 ```
 pip install ./
 ```
+or specify the setup.py path if it doesn't work:
+```
+py setup.py install
+```
 
 To know where it is installed, you can also use:
 ```
